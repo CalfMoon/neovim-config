@@ -22,9 +22,6 @@ return require("packer").startup(function(use)
 	use({
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		config = function()
-			require("nvim-autopairs").setup({})
-		end,
 	})
 	-- comment your code
 	use({ "numToStr/Comment.nvim" })
@@ -68,10 +65,5 @@ return require("packer").startup(function(use)
 	-- git
 	use({ "NeogitOrg/neogit" })
 	-- scroll gap at end
-	use({
-		"Aasim-A/scrollEOF.nvim",
-		config = function()
-			require("scrollEOF").setup()
-		end,
-	})
+	use({ "Aasim-A/scrollEOF.nvim" })
 end)
