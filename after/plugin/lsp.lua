@@ -1,13 +1,17 @@
-local lsp_zero = require("lsp-zero")
+vim.diagnostic.config({ virtual_text = false })
 
-lsp_zero.on_attach(function(client, bufnr)
-	-- see :help lsp-zero-keybindings
-	-- to learn the available actions
-	lsp_zero.default_keymaps({ buffer = bufnr })
-end)
-
-vim.diagnostic.config({
-	virtual_text = false,
+vim.keymap.set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<cr>")
+vim.keymap.set("n", "gj", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
+vim.keymap.set("n", "gk", "<cmd>lua vim.diagnostic.goto_next()<cr>")
+vim.api.nvim_create_autocmd("LspAttach", {
+	desc = "LSP actions",
+	callback = function(event)
+		local opts = { buffer = event.buf }
+		vim.keymap.set("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+		vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
+		vim.keymap.set("n", "gR", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+		vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+	end,
 })
 
 -- here you can setup the language servers
@@ -15,23 +19,15 @@ require("mason").setup({})
 
 -- lsp
 require("mason-lspconfig").setup({
-	ensure_installed = {
-		"tsserver",
-		"emmet_ls",
-		"cssls",
-		"css_variables",
-		"pyright",
-		"html",
-		"lua_ls",
-		"bashls",
-		"nil_ls",
-	},
+	ensure_installed = { "css_variables" },
+
 	handlers = {
 		function()
 			local lspconfig = require("lspconfig")
 			lspconfig.tsserver.setup({})
 			lspconfig.cssls.setup({})
 			lspconfig.html.setup({})
+			lspconfig.jsonls.setup({})
 			lspconfig.emmet_ls.setup({
 				filetype = { "html" },
 			})
@@ -51,9 +47,11 @@ require("formatter").setup({
 		lua = { require("formatter.filetypes.lua").stylua },
 		javascript = { require("formatter.filetypes.javascript").prettier },
 		javascriptreact = { require("formatter.filetypes.javascriptreact").prettier },
+		json = { require("formatter.filetypes.json").prettier },
 		css = { require("formatter.filetypes.css").prettier },
 		python = { require("formatter.filetypes.python").black },
 		html = { require("formatter.filetypes.html").htmlbeautifier },
+		sh = { require("formatter.filetypes.sh").shfmt },
 		rust = { require("formatter.filetypes.rust").rustfmt },
 		nix = { require("formatter.filetypes.nix").nixpkgs_fmt },
 
@@ -75,6 +73,28 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	command = ":FormatWrite",
 })
 
+-- autocomplete
+local cmp = require("cmp")
+cmp.setup({
+	sources = { { name = "nvim_lsp" } },
+	mapping = cmp.mapping.preset.insert({
+		["<Tab>"] = cmp.mapping.confirm({ select = true }),
+		["<C-k>"] = cmp.mapping.select_prev_item(),
+		["<C-j>"] = cmp.mapping.select_next_item(),
+	}),
+
+	window = {
+		completion = {
+			border = "rounded",
+			winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+		},
+		documentation = {
+			border = "rounded",
+			winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+		},
+	},
+})
+
 -- linter
 -- require("mason-nvim-lint").setup({
 -- 	ensure_installed = { "flake8" },
@@ -91,14 +111,3 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 -- 		require("lint").try_lint()
 -- 	end,
 -- })
-
--- autocomplete
-local cmp = require("cmp")
-cmp.setup({
-	sources = { { name = "nvim_lsp" } },
-	mapping = cmp.mapping.preset.insert({
-		["<Tab>"] = cmp.mapping.confirm({ select = true }),
-		["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<C-j>"] = cmp.mapping.select_next_item(),
-	}),
-})

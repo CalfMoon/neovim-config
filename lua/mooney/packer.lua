@@ -11,7 +11,6 @@ return require("packer").startup(function(use)
 	-- fuzzy finder
 	use({
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.8",
 		requires = { { "nvim-telescope/telescope-fzf-native.nvim", "nvim-lua/plenary.nvim" } },
 	})
 	-- syntax highlighter
@@ -22,6 +21,9 @@ return require("packer").startup(function(use)
 	use({
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
 	})
 	-- comment your code
 	use({ "numToStr/Comment.nvim" })
@@ -51,8 +53,8 @@ return require("packer").startup(function(use)
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
 
-		"mfussenegger/nvim-lint",
-		"rshkarin/mason-nvim-lint",
+		-- "mfussenegger/nvim-lint",
+		-- "rshkarin/mason-nvim-lint",
 
 		"mhartington/formatter.nvim",
 		"windwp/nvim-ts-autotag",
@@ -66,4 +68,16 @@ return require("packer").startup(function(use)
 	use({ "NeogitOrg/neogit" })
 	-- scroll gap at end
 	use({ "Aasim-A/scrollEOF.nvim" })
+	-- github
+	use({
+		"pwntester/octo.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("octo").setup()
+		end,
+	})
 end)

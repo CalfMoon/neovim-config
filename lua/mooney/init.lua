@@ -3,12 +3,25 @@ require("mooney.packer")
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.cmd("colorscheme catppuccin-mocha")
+
+require("catppuccin").setup({
+	custom_highlights = function(colors)
+		return {
+			Comment = { fg = colors.flamingo },
+			TabLineSel = { bg = colors.pink },
+			CmpBorder = { fg = colors.surface2 },
+			Pmenu = { bg = colors.none },
+		}
+	end,
+})
+
 vim.cmd("set number")
 vim.cmd("set relativenumber")
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+
+vim.opt.ignorecase = true
 
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2

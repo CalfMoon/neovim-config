@@ -5,9 +5,9 @@ require("neo-tree").setup({
 	hijack_netrw_behavior = "open_current",
 })
 
-vim.keymap.set("n", "<leader>d", function()
+vim.keymap.set("n", "<leader>t", function()
 	vim.cmd("Neotree")
 end)
-vim.keymap.set("n", "<leader>t", function()
+vim.keymap.set("n", "<leader>T", function()
 	vim.cmd("Neotree toggle position=right")
 end)
