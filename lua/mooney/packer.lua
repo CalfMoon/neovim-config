@@ -4,14 +4,15 @@ return require("packer").startup(function(use)
 	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
 	-- theme
-	use({
-		"catppuccin/nvim",
-		as = "catppuccin",
-	})
+	use({ "catppuccin/nvim", as = "catppuccin" })
 	-- fuzzy finder
 	use({
 		"nvim-telescope/telescope.nvim",
-		requires = { { "nvim-telescope/telescope-fzf-native.nvim", "nvim-lua/plenary.nvim" } },
+		requires = {
+			"nvim-telescope/telescope-ui-select.nvim",
+			"nvim-lua/plenary.nvim",
+			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+		},
 	})
 	-- syntax highlighter
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", requires = { "HiPhish/rainbow-delimiters.nvim" } })
@@ -71,13 +72,7 @@ return require("packer").startup(function(use)
 	-- github
 	use({
 		"pwntester/octo.nvim",
-		requires = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-			"nvim-tree/nvim-web-devicons",
-		},
-		config = function()
-			require("octo").setup()
-		end,
+		requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim", "nvim-tree/nvim-web-devicons" },
 	})
+	use("ThePrimeagen/vim-be-good")
 end)

@@ -58,15 +58,6 @@ require("formatter").setup({
 		["*"] = { require("formatter.filetypes.any").remove_trailing_whitespace },
 	},
 })
-
-require("nvim-ts-autotag").setup({
-	opts = {
-		enable_close = false, -- Auto close tags
-		enable_rename = true, -- Auto rename pairs of tags
-		enable_close_on_slash = false, -- Auto close on trailing </
-	},
-})
-
 vim.api.nvim_create_augroup("__formatter__", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
 	group = "__formatter__",
@@ -78,7 +69,7 @@ local cmp = require("cmp")
 cmp.setup({
 	sources = { { name = "nvim_lsp" } },
 	mapping = cmp.mapping.preset.insert({
-		["<Tab>"] = cmp.mapping.confirm({ select = true }),
+		["<Tab>"] = cmp.mapping.confirm({ select = false }),
 		["<C-k>"] = cmp.mapping.select_prev_item(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
 	}),
@@ -111,3 +102,11 @@ cmp.setup({
 -- 		require("lint").try_lint()
 -- 	end,
 -- })
+--
+require("nvim-ts-autotag").setup({
+	opts = {
+		enable_close = false, -- Auto close tags
+		enable_rename = true, -- Auto rename pairs of tags
+		enable_close_on_slash = false, -- Auto close on trailing </
+	},
+})
