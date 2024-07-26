@@ -14,6 +14,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+local lsp_zero = require("lsp-zero")
+
+lsp_zero.on_attach(function(client, bufnr)
+	-- see :help lsp-zero-keybindings
+	-- to learn the available actions
+	lsp_zero.default_keymaps({ buffer = bufnr })
+end)
+
 -- here you can setup the language servers
 require("mason").setup({})
 
@@ -69,7 +77,7 @@ local cmp = require("cmp")
 cmp.setup({
 	sources = { { name = "nvim_lsp" } },
 	mapping = cmp.mapping.preset.insert({
-		["<Tab>"] = cmp.mapping.confirm({ select = false }),
+		["<Tab>"] = cmp.mapping.confirm({ select = true }),
 		["<C-k>"] = cmp.mapping.select_prev_item(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
 	}),
