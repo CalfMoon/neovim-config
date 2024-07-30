@@ -1,21 +1,20 @@
 vim.diagnostic.config({ virtual_text = false })
 
-vim.keymap.set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<cr>")
-vim.keymap.set("n", "gj", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
-vim.keymap.set("n", "gk", "<cmd>lua vim.diagnostic.goto_next()<cr>")
+vim.keymap.set("n", "tl", "<cmd>lua vim.diagnostic.open_float()<cr>")
+vim.keymap.set("n", "tj", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
+vim.keymap.set("n", "tk", "<cmd>lua vim.diagnostic.goto_next()<cr>")
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP actions",
 	callback = function(event)
 		local opts = { buffer = event.buf }
-		vim.keymap.set("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-		vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
-		vim.keymap.set("n", "gR", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-		vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+		vim.keymap.set("n", "th", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+		vim.keymap.set("n", "tr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
+		vim.keymap.set("n", "tR", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+		vim.keymap.set("n", "td", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
 	end,
 })
 
 local lsp_zero = require("lsp-zero")
-
 lsp_zero.on_attach(function(client, bufnr)
 	-- see :help lsp-zero-keybindings
 	-- to learn the available actions

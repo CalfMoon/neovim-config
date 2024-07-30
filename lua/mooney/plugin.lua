@@ -60,6 +60,8 @@ local plugins = {
 	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
 	-- comment your code
 	"numToStr/Comment.nvim",
+	-- MarkDown Preview
+	{ "toppair/peek.nvim", event = "VeryLazy", build = "deno task --quiet build:fast" },
 
 	-- proper word motion
 	"chaoren/vim-wordmotion",
