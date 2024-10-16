@@ -15,9 +15,9 @@ require("catppuccin").setup({
 	end,
 })
 
-vim.cmd("set number")
-vim.cmd("set relativenumber")
-vim.cmd("set cursorline background=dark")
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.cursorline = true
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true

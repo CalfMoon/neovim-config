@@ -1,8 +1,8 @@
 vim.diagnostic.config({ virtual_text = false })
 
 vim.keymap.set("n", "tl", "<cmd>lua vim.diagnostic.open_float()<cr>")
-vim.keymap.set("n", "tj", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
-vim.keymap.set("n", "tk", "<cmd>lua vim.diagnostic.goto_next()<cr>")
+vim.keymap.set("n", "tk", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
+vim.keymap.set("n", "tj", "<cmd>lua vim.diagnostic.goto_next()<cr>")
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP actions",
 	callback = function(event)
@@ -15,11 +15,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 local lsp_zero = require("lsp-zero")
-lsp_zero.on_attach(function(client, bufnr)
-	-- see :help lsp-zero-keybindings
-	-- to learn the available actions
-	lsp_zero.default_keymaps({ buffer = bufnr })
-end)
+lsp_zero.on_attach(function(client, bufnr) end)
 
 -- here you can setup the language servers
 require("mason").setup({})
@@ -56,7 +52,7 @@ require("formatter").setup({
 		javascriptreact = { require("formatter.filetypes.javascriptreact").prettier },
 		json = { require("formatter.filetypes.json").prettier },
 		css = { require("formatter.filetypes.css").prettier },
-		python = { require("formatter.filetypes.python").black },
+		python = { require("formatter.filetypes.python").prettier },
 		html = { require("formatter.filetypes.html").htmlbeautifier },
 		sh = { require("formatter.filetypes.sh").shfmt },
 		rust = { require("formatter.filetypes.rust").rustfmt },

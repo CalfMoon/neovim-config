@@ -24,7 +24,7 @@ local plugins = {
 		dependencies = { "HiPhish/rainbow-delimiters.nvim" },
 	},
 	-- status line
-	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", opts = true } },
+	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 	-- file manager
 	{
 		"nvim-neo-tree/neo-tree.nvim",
@@ -62,7 +62,6 @@ local plugins = {
 	"numToStr/Comment.nvim",
 	-- MarkDown Preview
 	{ "toppair/peek.nvim", event = "VeryLazy", build = "deno task --quiet build:fast" },
-
 	-- proper word motion
 	"chaoren/vim-wordmotion",
 	-- scroll gap at end
@@ -76,7 +75,7 @@ local plugins = {
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
 
-		-- "mfussenegger/nvim-lint",
+		"mfussenegger/nvim-lint",
 		-- "rshkarin/mason-nvim-lint",
 
 		"mhartington/formatter.nvim",
