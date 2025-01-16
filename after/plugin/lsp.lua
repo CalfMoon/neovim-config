@@ -27,7 +27,7 @@ require("mason-lspconfig").setup({
 	handlers = {
 		function()
 			local lspconfig = require("lspconfig")
-			lspconfig.tsserver.setup({})
+			lspconfig.ts_ls.setup({})
 			lspconfig.cssls.setup({})
 			lspconfig.html.setup({})
 			lspconfig.jsonls.setup({})
@@ -35,7 +35,19 @@ require("mason-lspconfig").setup({
 				filetype = { "html" },
 			})
 			lspconfig.css_variables.setup({})
-			lspconfig.rust_analyzer.setup({})
+			lspconfig.rust_analyzer.setup({
+				settings = {
+					["rust-analyzer"] = {
+						procMacro = {
+							enable = true,
+						},
+						diagnostics = {
+							enable = true,
+							disabled = { "macro-error" },
+						},
+					},
+				},
+			})
 			lspconfig.pyright.setup({ settings = { python = { analysis = { typeCheckingMode = "off" } } } })
 			lspconfig.lua_ls.setup({ settings = { Lua = { diagnostics = { globals = { "vim" } } } } })
 			lspconfig.bashls.setup({})
@@ -50,6 +62,8 @@ require("formatter").setup({
 		lua = { require("formatter.filetypes.lua").stylua },
 		javascript = { require("formatter.filetypes.javascript").prettier },
 		javascriptreact = { require("formatter.filetypes.javascriptreact").prettier },
+		typescript = { require("formatter.filetypes.javascript").prettier },
+		typescriptreact = { require("formatter.filetypes.javascriptreact").prettier },
 		json = { require("formatter.filetypes.json").prettier },
 		css = { require("formatter.filetypes.css").prettier },
 		python = { require("formatter.filetypes.python").prettier },
