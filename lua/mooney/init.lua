@@ -1,5 +1,5 @@
 require("mooney.remap")
-require("mooney.plugin")
+require("mooney.lazy")
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

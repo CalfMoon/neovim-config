@@ -15,6 +15,21 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+	{
+		"kndndrj/nvim-dbee",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+		build = function()
+			-- Install tries to automatically detect the install method.
+			-- if it fails, try calling it with one of these parameters:
+			--    "curl", "wget", "bitsadmin", "go"
+			require("dbee").install()
+		end,
+		config = function()
+			require("dbee").setup(--[[optional config]])
+		end,
+	},
 	-- theme
 	{ "catppuccin/nvim", name = "catppuccin" },
 	-- syntax highlighter
@@ -67,27 +82,46 @@ local plugins = {
 	-- scroll gap at end
 	"Aasim-A/scrollEOF.nvim",
 
-	-- lsp stuff
+	-- ide stuff
 	{
-		"VonHeikemen/lsp-zero.nvim",
 		"williamboman/mason.nvim",
+		-- lsp and autocomplete
+		{
+			"VonHeikemen/lsp-zero.nvim",
+			"williamboman/mason-lspconfig.nvim",
+			"neovim/nvim-lspconfig",
 
-		"williamboman/mason-lspconfig.nvim",
-		"neovim/nvim-lspconfig",
+			"windwp/nvim-ts-autotag",
 
-		"mfussenegger/nvim-lint",
-		-- "rshkarin/mason-nvim-lint",
-
-		"mhartington/formatter.nvim",
-		"windwp/nvim-ts-autotag",
-
-		"hrsh7th/nvim-cmp",
-		"hrsh7th/cmp-nvim-lsp",
-
-		"L3MON4D3/LuaSnip",
+			"hrsh7th/nvim-cmp",
+			"hrsh7th/cmp-nvim-lsp",
+			"L3MON4D3/LuaSnip",
+			"mrcjkb/rustaceanvim",
+		},
+		-- debugger
+		{
+			"mfussenegger/nvim-dap",
+			"rcarriga/nvim-dap-ui",
+			"nvim-neotest/nvim-nio",
+			{
+				"microsoft/vscode-js-debug",
+				build = "npm install --legacy-peer-deps && npx gulp dapDebugServer",
+			},
+			{
+				"microsoft/vscode-cpptools",
+				build = "npm install --legacy-peer-deps && npx gulp",
+			},
+		},
+		-- linting
+		{
+			"mfussenegger/nvim-lint",
+			-- "rshkarin/mason-nvim-lint",
+		},
+		-- formatter
+		{
+			"mhartington/formatter.nvim",
+		},
 	},
-	-- training
-	"ThePrimeagen/vim-be-good",
 }
 
 require("lazy").setup(plugins, {})

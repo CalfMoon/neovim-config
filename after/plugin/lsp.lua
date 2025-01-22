@@ -35,19 +35,6 @@ require("mason-lspconfig").setup({
 				filetype = { "html" },
 			})
 			lspconfig.css_variables.setup({})
-			lspconfig.rust_analyzer.setup({
-				settings = {
-					["rust-analyzer"] = {
-						procMacro = {
-							enable = true,
-						},
-						diagnostics = {
-							enable = true,
-							disabled = { "macro-error" },
-						},
-					},
-				},
-			})
 			lspconfig.pyright.setup({ settings = { python = { analysis = { typeCheckingMode = "off" } } } })
 			lspconfig.lua_ls.setup({ settings = { Lua = { diagnostics = { globals = { "vim" } } } } })
 			lspconfig.bashls.setup({})
@@ -56,35 +43,24 @@ require("mason-lspconfig").setup({
 	},
 })
 
---formatter
-require("formatter").setup({
-	filetype = {
-		lua = { require("formatter.filetypes.lua").stylua },
-		javascript = { require("formatter.filetypes.javascript").prettier },
-		javascriptreact = { require("formatter.filetypes.javascriptreact").prettier },
-		typescript = { require("formatter.filetypes.javascript").prettier },
-		typescriptreact = { require("formatter.filetypes.javascriptreact").prettier },
-		json = { require("formatter.filetypes.json").prettier },
-		css = { require("formatter.filetypes.css").prettier },
-		python = { require("formatter.filetypes.python").prettier },
-		html = { require("formatter.filetypes.html").htmlbeautifier },
-		sh = { require("formatter.filetypes.sh").shfmt },
-		rust = { require("formatter.filetypes.rust").rustfmt },
-		nix = { require("formatter.filetypes.nix").nixpkgs_fmt },
-
-		["*"] = { require("formatter.filetypes.any").remove_trailing_whitespace },
+vim.g.rustaceanvim.server = {
+	default_settings = {
+		["rust-analyzer"] = {
+			procMacro = {
+				enable = true,
+			},
+			diagnostics = {
+				enable = true,
+				disabled = { "macro-error" },
+			},
+		},
 	},
-})
-vim.api.nvim_create_augroup("__formatter__", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-	group = "__formatter__",
-	command = ":FormatWrite",
-})
+}
 
 -- autocomplete
 local cmp = require("cmp")
 cmp.setup({
-	sources = { { name = "nvim_lsp" } },
+	sources = { { name = "nvim_lsp" }, { name = "luasnip" } },
 	mapping = cmp.mapping.preset.insert({
 		["<Tab>"] = cmp.mapping.confirm({ select = true }),
 		["<C-k>"] = cmp.mapping.select_prev_item(),
@@ -100,6 +76,14 @@ cmp.setup({
 			border = "rounded",
 			winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
 		},
+	},
+})
+
+require("nvim-ts-autotag").setup({
+	opts = {
+		enable_close = false, -- Auto close tags
+		enable_rename = true, -- Auto rename pairs of tags
+		enable_close_on_slash = false, -- Auto close on trailing </
 	},
 })
 
@@ -120,10 +104,3 @@ cmp.setup({
 -- 	end,
 -- })
 --
-require("nvim-ts-autotag").setup({
-	opts = {
-		enable_close = false, -- Auto close tags
-		enable_rename = true, -- Auto rename pairs of tags
-		enable_close_on_slash = false, -- Auto close on trailing </
-	},
-})
