@@ -22,7 +22,18 @@ require("mason").setup({})
 
 -- lsp
 require("mason-lspconfig").setup({
-	ensure_installed = { "css_variables" },
+	ensure_installed = {
+		"ts_ls",
+		"cssls",
+		"css_variables",
+		"html",
+		"jsonls",
+		"emmet_ls",
+		"pyright",
+		-- lua and rust_analyzer has to be installed in os level in nixos
+		"bashls",
+		"nil_ls",
+	},
 
 	handlers = {
 		function()
@@ -43,15 +54,17 @@ require("mason-lspconfig").setup({
 	},
 })
 
-vim.g.rustaceanvim.server = {
-	default_settings = {
-		["rust-analyzer"] = {
-			procMacro = {
-				enable = true,
-			},
-			diagnostics = {
-				enable = true,
-				disabled = { "macro-error" },
+vim.g.rustaceanvim = {
+	server = {
+		default_settings = {
+			["rust-analyzer"] = {
+				procMacro = {
+					enable = true,
+				},
+				diagnostics = {
+					enable = true,
+					disabled = { "macro-error" },
+				},
 			},
 		},
 	},
