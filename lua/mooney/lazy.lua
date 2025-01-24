@@ -85,6 +85,7 @@ local plugins = {
 	-- ide stuff
 	{
 		"williamboman/mason.nvim",
+		"mrcjkb/rustaceanvim",
 		-- lsp and autocomplete
 		{
 			"VonHeikemen/lsp-zero.nvim",
@@ -96,20 +97,17 @@ local plugins = {
 			"hrsh7th/nvim-cmp",
 			"hrsh7th/cmp-nvim-lsp",
 			"L3MON4D3/LuaSnip",
-			"mrcjkb/rustaceanvim",
+			"onsails/lspkind.nvim",
 		},
 		-- debugger
 		{
 			"mfussenegger/nvim-dap",
+			"jay-babu/mason-nvim-dap.nvim",
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
 			{
 				"microsoft/vscode-js-debug",
 				build = "npm install --legacy-peer-deps && npx gulp dapDebugServer",
-			},
-			{
-				"microsoft/vscode-cpptools",
-				build = "npm install --legacy-peer-deps && npx gulp",
 			},
 		},
 		-- linting

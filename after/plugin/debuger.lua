@@ -2,6 +2,7 @@ local dap, dapui = require("dap"), require("dapui")
 dapui.setup()
 
 vim.keymap.set("n", "tb", dap.toggle_breakpoint, {})
+vim.keymap.set("n", "tc", dap.clear_breakpoints, {})
 vim.keymap.set("n", "tn", dap.continue, {})
 vim.keymap.set("n", "tm", dapui.toggle, {})
 
@@ -11,6 +12,9 @@ end
 dap.listeners.before.launch.dapui_config = function()
 	dapui.open()
 end
+
+vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "⭕", texthl = "", linehl = "", numhl = "" })
 
 dap.adapters["pwa-node"] = {
 	type = "server",
@@ -30,6 +34,7 @@ dap.configurations.javascript = {
 		cwd = "${workspaceFolder}",
 		program = "${file}",
 		runtimeExecutable = "node",
+		console = "integratedTerminal",
 	},
 }
 
@@ -50,9 +55,11 @@ dap.configurations.typescript = {
 			"${workspaceFolder}/**",
 			"!**/node_modules/**",
 		},
+		console = "integratedTerminal",
 	},
 }
 
-vim.g.rustaceanvim = {
-	dap = {},
-}
+require("mason").setup()
+require("mason-nvim-dap").setup({
+	ensure_installed = {},
+})

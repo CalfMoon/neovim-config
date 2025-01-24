@@ -72,6 +72,7 @@ vim.g.rustaceanvim = {
 
 -- autocomplete
 local cmp = require("cmp")
+local lspkind = require("lspkind")
 cmp.setup({
 	sources = { { name = "nvim_lsp" }, { name = "luasnip" } },
 	mapping = cmp.mapping.preset.insert({
@@ -79,11 +80,19 @@ cmp.setup({
 		["<C-k>"] = cmp.mapping.select_prev_item(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
 	}),
+	formatting = {
+		format = lspkind.cmp_format({
+			mode = "symbol_text",
+			ellipsis_char = "...",
+			maxwidth = 40,
+		}),
+	},
 
 	window = {
 		completion = {
 			border = "rounded",
 			winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+			col_offset = -3,
 		},
 		documentation = {
 			border = "rounded",
