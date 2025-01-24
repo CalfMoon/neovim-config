@@ -1,6 +1,11 @@
 local dap, dapui = require("dap"), require("dapui")
 dapui.setup()
 
+require("mason").setup()
+require("mason-nvim-dap").setup({
+	ensure_installed = { "js" },
+})
+
 vim.keymap.set("n", "tb", dap.toggle_breakpoint, {})
 vim.keymap.set("n", "tc", dap.clear_breakpoints, {})
 vim.keymap.set("n", "tn", dap.continue, {})
@@ -21,8 +26,8 @@ dap.adapters["pwa-node"] = {
 	host = "localhost",
 	port = "${port}",
 	executable = {
-		command = "node",
-		args = { vim.fn.stdpath("data") .. "/lazy/vscode-js-debug/dist/src/dapDebugServer.js", "${port}" },
+		command = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug-adapter",
+		args = { "${port}" },
 	},
 }
 
@@ -58,8 +63,3 @@ dap.configurations.typescript = {
 		console = "integratedTerminal",
 	},
 }
-
-require("mason").setup()
-require("mason-nvim-dap").setup({
-	ensure_installed = {},
-})

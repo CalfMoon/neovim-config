@@ -105,10 +105,6 @@ local plugins = {
 			"jay-babu/mason-nvim-dap.nvim",
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
-			{
-				"microsoft/vscode-js-debug",
-				build = "npm install --legacy-peer-deps && npx gulp dapDebugServer",
-			},
 		},
 		-- linting
 		{
@@ -117,7 +113,6 @@ local plugins = {
 		},
 		-- formatter
 		{
-			"mhartington/formatter.nvim",
 			"stevearc/conform.nvim",
 			"zapling/mason-conform.nvim",
 		},
