@@ -120,6 +120,8 @@ local plugins = {
 		-- formatter
 		{
 			"mhartington/formatter.nvim",
+			"stevearc/conform.nvim",
+			"zapling/mason-conform.nvim",
 		},
 	},
 }

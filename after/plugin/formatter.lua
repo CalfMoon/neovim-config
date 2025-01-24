@@ -1,23 +1,26 @@
-require("formatter").setup({
-	filetype = {
-		lua = { require("formatter.filetypes.lua").stylua },
-		javascript = { require("formatter.filetypes.javascript").prettier },
-		javascriptreact = { require("formatter.filetypes.javascriptreact").prettier },
-		typescript = { require("formatter.filetypes.javascript").prettier },
-		typescriptreact = { require("formatter.filetypes.javascriptreact").prettier },
-		json = { require("formatter.filetypes.json").prettier },
-		css = { require("formatter.filetypes.css").prettier },
-		python = { require("formatter.filetypes.python").prettier },
-		html = { require("formatter.filetypes.html").htmlbeautifier },
-		sh = { require("formatter.filetypes.sh").shfmt },
-		rust = { require("formatter.filetypes.rust").rustfmt },
-		nix = { require("formatter.filetypes.nix").nixpkgs_fmt },
-
-		["*"] = { require("formatter.filetypes.any").remove_trailing_whitespace },
+require("mason").setup()
+require("conform").setup({
+	formatters_by_ft = {
+		lua = { "stylua" },
+		javascript = { "prettier" },
+		javascriptreact = { "prettier" },
+		typescript = { "prettier" },
+		typescriptreact = { "prettier" },
+		json = { "prettier" },
+		css = { "prettier" },
+		python = { "black" },
+		html = { "prettier" },
+		sh = { "shfmt" },
+		rust = { "rustfmt" },
+		nix = { "nixpkgs_fmt" },
+		["_"] = { "trim_whitespace" },
+	},
+	format_on_save = {
+		timeout_ms = 500,
+		lsp_format = "fallback",
 	},
 })
-vim.api.nvim_create_augroup("__formatter__", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-	group = "__formatter__",
-	command = ":FormatWrite",
+require("mason-conform").setup({
+	-- must be installed through os
+	ignore_install = { "stylua", "rustfmt" },
 })
