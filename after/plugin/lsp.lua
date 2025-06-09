@@ -81,17 +81,25 @@ cmp.setup({
 		["<C-j>"] = cmp.mapping.select_next_item(),
 	}),
 	formatting = {
-		format = lspkind.cmp_format({
-			mode = "symbol_text",
-			ellipsis_char = "...",
-			maxwidth = 40,
-		}),
+		format = function(entry, item)
+			local color_item = require("nvim-highlight-colors").format(entry, { kind = item.kind })
+			item = lspkind.cmp_format({
+				mode = "symbol_text",
+				ellipsis_char = "...",
+				maxwidth = 40,
+			})(entry, item)
+			if color_item.abbr_hl_group then
+				item.kind_hl_group = color_item.abbr_hl_group
+				item.kind = color_item.abbr
+			end
+			return item
+		end,
 	},
 
 	window = {
 		completion = {
 			border = "rounded",
-			winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+			test = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
 			col_offset = -3,
 		},
 		documentation = {
@@ -101,6 +109,12 @@ cmp.setup({
 	},
 })
 
+require("nvim-highlight-colors").setup({
+	render = "virtual",
+	virtual_symbol_prefix = "",
+	virtual_symbol_suffix = "",
+	virtual_symbol_position = "eol",
+})
 require("nvim-ts-autotag").setup({
 	opts = {
 		enable_close = false, -- Auto close tags

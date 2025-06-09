@@ -93,6 +93,7 @@ local plugins = {
 			"neovim/nvim-lspconfig",
 
 			"windwp/nvim-ts-autotag",
+			"brenoprata10/nvim-highlight-colors",
 
 			"hrsh7th/nvim-cmp",
 			"hrsh7th/cmp-nvim-lsp",
